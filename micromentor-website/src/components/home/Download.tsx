@@ -44,7 +44,7 @@ const Download: React.FC = () => {
             Transform Your Learning Journey Today
           </h2>
           <p className="text-xl mb-12 text-indigo-100">
-            Start learning smarter—one chat, quiz, flashcard, and video at a time with MicroMentor's AI-powered platform.
+            Start learning smarter&apos;one chat, quiz, flashcard, and video at a time with MicroMentor&apos;s AI-powered platform.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center space-y-6 sm:space-y-0 sm:space-x-8">

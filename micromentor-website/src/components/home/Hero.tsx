@@ -1,8 +1,6 @@
 "use client"
 
-import React, { MouseEvent, useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { MouseEvent, useState, useEffect, useRef, useCallback } from 'react';import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaDownload } from 'react-icons/fa';
 
@@ -235,21 +233,9 @@ const Hero: React.FC = () => {
     { id: 'recommendations', name: 'Recommendations', image: '/images/recomendations.png', alt: 'Personalized Recommendations' },
     { id: 'teacherselection', name: 'Teacher Selection', image: '/images/teacherseclection.png', alt: 'Teacher Selection Interface' }
   ];
-  
-  // Set up automatic cycling through features
-  useEffect(() => {
-    startAutoRotation();
-    
-    // Cleanup timer on unmount
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
-  
-  // Function to start the auto rotation timer
-  const startAutoRotation = () => {
+
+
+  const startAutoRotation = useCallback(() => {
     // Clear any existing timer
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -265,7 +251,22 @@ const Hero: React.FC = () => {
         return features[nextIndex].id as FeatureType;
       });
     }, 8000); // 8 seconds for slower rotation
-  };
+  }, [features]);
+  
+  // Set up automatic cycling through features
+  useEffect(() => {
+    startAutoRotation();
+    
+    // Cleanup timer on unmount
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [startAutoRotation]);
+  
+  // Function to start the auto rotation timer
+
   
   // Handler for feature callout clicks
   const handleFeatureClick = (feature: FeatureType) => {
