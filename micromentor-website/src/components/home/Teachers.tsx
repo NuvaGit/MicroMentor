@@ -1,35 +1,32 @@
 "use client"
 
 import Image from 'next/image';
-
 import { motion } from 'framer-motion';
-
-// Rest of component...
 
 const teachers = [
   {
     name: 'Dr. Caius',
     subject: 'Mathematics',
     description: 'An award-winning mathematician with a passion for making complex concepts simple and accessible.',
-    image: '/images/caius.png',
+    image: '/images/dr-caius.png',
   },
   {
     name: 'Prof. Elara',
     subject: 'Sciences',
     description: 'Specializes in physics and chemistry with years of experience teaching at university level.',
-    image: '/images/teacher2.png',
+    image: '/images/prof-elara.png',
   },
   {
     name: 'Ms. Thalia',
     subject: 'Literature',
     description: 'A creative writing expert who can help with literary analysis and language arts.',
-    image: '/images/teacher3.png',
+    image: '/images/ms-thalia.png',
   },
   {
     name: 'Mr. Vansh',
     subject: 'Geography',
     description: 'Passionate about world geography, cultures, and natural landmarks around the globe.',
-    image: '/images/vansh.png',
+    image: '/images/mr-vansh.png',
   },
 ];
 

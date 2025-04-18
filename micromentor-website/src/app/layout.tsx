@@ -1,3 +1,4 @@
+// Remove the "use client" directive from this file
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';

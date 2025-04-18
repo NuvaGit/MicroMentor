@@ -37,7 +37,7 @@ const Hero = () => {
           >
             <div className="relative">
               <Image 
-                src="/images/logo.png" 
+                src="/images/app-preview.png" 
                 alt="MicroMentor App Preview" 
                 width={600} 
                 height={400} 

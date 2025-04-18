@@ -3,7 +3,6 @@
 import { FaComments, FaQuestionCircle, FaClipboardList, FaVideo } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
-
 const features = [
   {
     icon: <FaComments className="text-5xl text-indigo-600 mb-6" />,

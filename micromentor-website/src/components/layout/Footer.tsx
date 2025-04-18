@@ -1,3 +1,5 @@
+"use client"
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaTwitter, FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
@@ -55,4 +57,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Footer;  

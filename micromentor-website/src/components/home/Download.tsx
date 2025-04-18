@@ -3,7 +3,6 @@
 import { FaApple, FaGooglePlay } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
-// Rest of component...
 const Download = () => {
   return (
     <section id="download" className="py-20 bg-gradient-to-r from-indigo-600 to-green-500 text-white">
