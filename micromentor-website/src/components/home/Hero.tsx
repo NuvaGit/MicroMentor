@@ -387,30 +387,55 @@ const Hero: React.FC = () => {
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               ></motion.div>
               
-              <div className="relative bg-black rounded-3xl p-4 shadow-2xl">
-                <div className="rounded-2xl overflow-hidden relative aspect-[9/19.5] max-w-xs mx-auto">
-                  {/* Animated app preview images */}
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={currentFeature.id}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.05 }}
-                      transition={{ duration: 0.4 }}
-                      className="absolute inset-0"
-                    >
-                      <Image 
-                        src={currentFeature.image}
-                        alt={currentFeature.alt}
-                        fill
-                        style={{objectFit: 'cover'}}
-                        className="rounded-2xl"
-                        quality={100}
-                        priority={currentFeature.id === 'main'}
-                      />
-                    </motion.div>
-                  </AnimatePresence>
+              {/* iPhone frame with realistic details */}
+              <div className="relative mx-auto max-w-xs">
+                {/* iPhone outer frame */}
+                <div className="relative bg-[#f5f5f7] rounded-[55px] p-3 shadow-2xl border-8 border-[#1d1d1f] overflow-visible">
+                  {/* Side buttons */}
+                  <div className="absolute -left-2 top-28 w-1 h-12 bg-[#1d1d1f] rounded-l-lg"></div>
+                  <div className="absolute -left-2 top-44 w-1 h-12 bg-[#1d1d1f] rounded-l-lg"></div>
+                  <div className="absolute -left-2 top-60 w-1 h-20 bg-[#1d1d1f] rounded-l-lg"></div>
+                  <div className="absolute -right-2 top-36 w-1 h-14 bg-[#1d1d1f] rounded-r-lg"></div>
+                  
+                  {/* Inner screen container with notch */}
+                  <div className="relative rounded-[45px] overflow-hidden aspect-[9/19.5] bg-black">
+                    {/* Notch */}
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/2 h-7 bg-black z-20 flex justify-center items-end pb-1">
+                      <div className="rounded-b-3xl w-1/3 h-full bg-black"></div>
+                    </div>
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-28 h-6 bg-black z-10 rounded-b-lg flex justify-center">
+                      <div className="w-2 h-2 rounded-full bg-[#333] mt-1.5 mx-1"></div>
+                      <div className="w-4 h-1 rounded-full bg-[#333] mt-2 mx-1"></div>
+                    </div>
+                    
+                    {/* Animated app preview images */}
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={currentFeature.id}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.05 }}
+                        transition={{ duration: 0.4 }}
+                        className="absolute inset-0"
+                      >
+                        <Image 
+                          src={currentFeature.image}
+                          alt={currentFeature.alt}
+                          fill
+                          style={{objectFit: 'cover'}}
+                          quality={100}
+                          priority={currentFeature.id === 'main'}
+                        />
+                      </motion.div>
+                    </AnimatePresence>
+                    
+                    {/* Home indicator line */}
+                    <div className="absolute bottom-1.5 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-white rounded-full opacity-80 z-10"></div>
+                  </div>
                 </div>
+                
+                {/* Subtle reflection effect */}
+                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-4/5 h-10 bg-black/20 blur-md rounded-full"></div>
               </div>
               
               {/* App feature callouts with interactive highlighting */}
