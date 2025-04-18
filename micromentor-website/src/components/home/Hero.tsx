@@ -1,6 +1,7 @@
 "use client"
 
-import React, { MouseEvent, useState, useEffect, useRef, useCallback } from 'react';import Image from 'next/image';
+import React, { MouseEvent, useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaDownload } from 'react-icons/fa';
 
@@ -221,7 +222,26 @@ type FeatureType = 'main' | 'ai-learning' | 'quizzes' | 'flashcards';
 const Hero: React.FC = () => {
   // State for tracking the active feature image
   const [activeFeature, setActiveFeature] = useState<FeatureType>('main');
+  const [isMobile, setIsMobile] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Check for mobile screen size
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkIsMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkIsMobile);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
   
   // Define feature callouts with their respective images and details
   const features = [
@@ -330,20 +350,20 @@ const Hero: React.FC = () => {
       {/* Animated bubbles background */}
       <Bubbles />
       
-      <div className="container mx-auto px-4 relative z-10 pt-32 pb-20 md:pt-40 md:pb-32">
+      <div className="container mx-auto px-4 relative z-10 pt-20 sm:pt-32 pb-20 md:pt-40 md:pb-32">
         <div className="flex flex-col md:flex-row items-center">
           <motion.div 
-            className="md:w-1/2 mb-16 md:mb-0 text-center md:text-left"
+            className="md:w-1/2 mb-12 md:mb-0 text-center md:text-left"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
               Knowledge That{" "}
               <span className="relative">
                 Grows
                 <motion.span 
-                  className="absolute bottom-1 left-0 w-full h-2 bg-green-400 opacity-50 rounded-full"
+                  className="absolute bottom-1 left-0 w-full h-1.5 sm:h-2 bg-green-400 opacity-50 rounded-full"
                   animate={{ scaleX: [1, 1.1, 1], opacity: [0.5, 0.7, 0.5] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 ></motion.span>
@@ -351,13 +371,13 @@ const Hero: React.FC = () => {
               With You
             </h1>
             
-            <p className="text-xl mb-8 text-indigo-100 md:max-w-lg">
+            <p className="text-lg sm:text-xl mb-8 text-indigo-100 md:max-w-lg">
               Your all-in-one, AI-powered study companion designed to help you learn faster and smarter with personalized guidance.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
               <motion.button
-                className="inline-flex items-center justify-center space-x-2 bg-white text-indigo-600 px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform transition-all"
+                className="inline-flex items-center justify-center space-x-2 bg-white text-indigo-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform transition-all"
                 whileHover={{ y: -5, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)" }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 onClick={handleScrollToDownload}
@@ -368,7 +388,7 @@ const Hero: React.FC = () => {
               
               <motion.a 
                 href="#features"
-                className="inline-flex items-center justify-center bg-indigo-700/30 text-white border border-indigo-200/30 px-8 py-4 rounded-full font-semibold text-lg hover:bg-indigo-700/50 transition-all"
+                className="inline-flex items-center justify-center bg-indigo-700/30 text-white border border-indigo-200/30 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-lg hover:bg-indigo-700/50 transition-all"
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
@@ -378,12 +398,12 @@ const Hero: React.FC = () => {
           </motion.div>
           
           <motion.div 
-            className="md:w-1/2 md:pl-12"
+            className="md:w-1/2 md:pl-6 lg:pl-12 flex justify-center"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
           >
-            <div className="relative">
+            <div className="relative w-full max-w-xs mx-auto">
               {/* Phone frame with animations */}
               <motion.div 
                 className="absolute -inset-4 bg-gradient-to-r from-indigo-400 to-green-400 rounded-3xl blur opacity-20"
@@ -392,17 +412,17 @@ const Hero: React.FC = () => {
               ></motion.div>
               
               {/* iPhone frame with improved seamless design - status bar elements removed */}
-              <div className="relative mx-auto max-w-xs">
+              <div className="relative mx-auto">
                 {/* iPhone outer frame - refined border and dimensions */}
-                <div className="relative bg-[#f5f5f7] rounded-[55px] p-2 shadow-2xl border-[6px] border-[#1d1d1f] overflow-visible">
-                  {/* Side buttons - repositioned for better alignment */}
-                  <div className="absolute -left-1.5 top-28 w-1 h-12 bg-[#1d1d1f] rounded-l-lg"></div>
-                  <div className="absolute -left-1.5 top-44 w-1 h-12 bg-[#1d1d1f] rounded-l-lg"></div>
-                  <div className="absolute -left-1.5 top-60 w-1 h-20 bg-[#1d1d1f] rounded-l-lg"></div>
-                  <div className="absolute -right-1.5 top-36 w-1 h-14 bg-[#1d1d1f] rounded-r-lg"></div>
+                <div className="relative bg-[#f5f5f7] rounded-[40px] sm:rounded-[55px] p-1.5 sm:p-2 shadow-2xl border-[4px] sm:border-[6px] border-[#1d1d1f] overflow-visible">
+                  {/* Side buttons - visible only on larger screens */}
+                  <div className="hidden sm:block absolute -left-1.5 top-28 w-1 h-12 bg-[#1d1d1f] rounded-l-lg"></div>
+                  <div className="hidden sm:block absolute -left-1.5 top-44 w-1 h-12 bg-[#1d1d1f] rounded-l-lg"></div>
+                  <div className="hidden sm:block absolute -left-1.5 top-60 w-1 h-20 bg-[#1d1d1f] rounded-l-lg"></div>
+                  <div className="hidden sm:block absolute -right-1.5 top-36 w-1 h-14 bg-[#1d1d1f] rounded-r-lg"></div>
                   
                   {/* Inner screen container with integrated notch and no visible gaps */}
-                  <div className="relative rounded-[45px] overflow-hidden aspect-[9/19.5] bg-[#f5f5f7]">
+                  <div className="relative rounded-[35px] sm:rounded-[45px] overflow-hidden aspect-[9/19.5] bg-[#f5f5f7]">
                     {/* Dynamic content (full bleed to edges) */}
                     <AnimatePresence mode="wait">
                       <motion.div
@@ -411,7 +431,7 @@ const Hero: React.FC = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 1.02 }}
                         transition={{ duration: 0.4 }}
-                        className="absolute inset-0 rounded-[45px] overflow-hidden"
+                        className="absolute inset-0 rounded-[35px] sm:rounded-[45px] overflow-hidden"
                       >
                         <Image 
                           src={currentFeature.image}
@@ -425,63 +445,86 @@ const Hero: React.FC = () => {
                     </AnimatePresence>
                     
                     {/* Overlay notch only - no status bar elements */}
-                    <div className="absolute top-0 left-0 right-0 h-7 z-20 flex items-center justify-center">
-                      <div className="w-1/2 h-full bg-black rounded-b-3xl flex justify-center items-center">
-                        <div className="w-16 h-4 flex items-center justify-center space-x-1.5">
-                          <div className="w-2 h-2 rounded-full bg-[#444]"></div>
-                          <div className="w-4 h-1 rounded-full bg-[#444]"></div>
+                    <div className="absolute top-0 left-0 right-0 h-5 sm:h-7 z-20 flex items-center justify-center">
+                      <div className="w-1/3 sm:w-1/2 h-full bg-black rounded-b-2xl sm:rounded-b-3xl flex justify-center items-center">
+                        <div className="w-8 sm:w-16 h-2 sm:h-4 flex items-center justify-center space-x-1 sm:space-x-1.5">
+                          <div className="w-1 sm:w-2 h-1 sm:h-2 rounded-full bg-[#444]"></div>
+                          <div className="w-2 sm:w-4 h-0.5 sm:h-1 rounded-full bg-[#444]"></div>
                         </div>
                       </div>
                     </div>
                     
                     {/* Home indicator line */}
-                    <div className="absolute bottom-1.5 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-white rounded-full opacity-90 z-10"></div>
+                    <div className="absolute bottom-1 sm:bottom-1.5 left-1/2 transform -translate-x-1/2 w-1/3 h-0.5 sm:h-1 bg-white rounded-full opacity-90 z-10"></div>
                   </div>
                 </div>
                 
                 {/* Enhanced reflection effect */}
-                <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 w-full h-12 bg-gradient-to-t from-black/5 to-transparent blur-lg rounded-full"></div>
+                <div className="absolute -bottom-6 sm:-bottom-10 left-1/2 transform -translate-x-1/2 w-full h-8 sm:h-12 bg-gradient-to-t from-black/5 to-transparent blur-lg rounded-full"></div>
               </div>
               
-              {/* App feature callouts with interactive highlighting */}
-              <motion.div 
-                className={`absolute -right-10 top-6 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg cursor-pointer transform transition-all ${isFeatureActive('ai-learning') ? 'ring-2 ring-green-400 scale-110' : 'hover:scale-105'}`}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-                onClick={() => handleFeatureClick('ai-learning')}
-                whileHover={{ scale: isFeatureActive('ai-learning') ? 1.1 : 1.05 }}
-              >
-                <p className={`text-xs font-medium ${isFeatureActive('ai-learning') ? 'text-green-600' : 'text-indigo-800'}`}>
-                  AI-Powered Learning
-                </p>
-              </motion.div>
+              {/* App feature callouts with interactive highlighting - hidden on mobile */}
+              {!isMobile && (
+                <>
+                  <motion.div 
+                    className={`absolute -right-8 top-6 bg-white/90 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg cursor-pointer transform transition-all ${isFeatureActive('ai-learning') ? 'ring-2 ring-green-400 scale-110' : 'hover:scale-105'}`}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.8 }}
+                    onClick={() => handleFeatureClick('ai-learning')}
+                    whileHover={{ scale: isFeatureActive('ai-learning') ? 1.1 : 1.05 }}
+                  >
+                    <p className={`text-xs font-medium ${isFeatureActive('ai-learning') ? 'text-green-600' : 'text-indigo-800'}`}>
+                      AI-Powered Learning
+                    </p>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className={`absolute -left-8 sm:-left-12 top-1/3 bg-white/90 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg cursor-pointer transform transition-all ${isFeatureActive('quizzes') ? 'ring-2 ring-green-400 scale-110' : 'hover:scale-105'}`}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 1 }}
+                    onClick={() => handleFeatureClick('quizzes')}
+                    whileHover={{ scale: isFeatureActive('quizzes') ? 1.1 : 1.05 }}
+                  >
+                    <p className={`text-xs font-medium ${isFeatureActive('quizzes') ? 'text-green-600' : 'text-indigo-800'}`}>
+                      Personalized Quizzes
+                    </p>
+                  </motion.div>
+                  
+                  <motion.div 
+                    className={`absolute -right-6 sm:-right-8 bottom-20 bg-white/90 backdrop-blur-sm rounded-lg p-2 sm:p-3 shadow-lg cursor-pointer transform transition-all ${isFeatureActive('flashcards') ? 'ring-2 ring-green-400 scale-110' : 'hover:scale-105'}`}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 1.2 }}
+                    onClick={() => handleFeatureClick('flashcards')}
+                    whileHover={{ scale: isFeatureActive('flashcards') ? 1.1 : 1.05 }}
+                  >
+                    <p className={`text-xs font-medium ${isFeatureActive('flashcards') ? 'text-green-600' : 'text-indigo-800'}`}>
+                      Adaptive Flashcards
+                    </p>
+                  </motion.div>
+                </>
+              )}
               
-              <motion.div 
-                className={`absolute -left-12 top-1/3 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg cursor-pointer transform transition-all ${isFeatureActive('quizzes') ? 'ring-2 ring-green-400 scale-110' : 'hover:scale-105'}`}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 1 }}
-                onClick={() => handleFeatureClick('quizzes')}
-                whileHover={{ scale: isFeatureActive('quizzes') ? 1.1 : 1.05 }}
-              >
-                <p className={`text-xs font-medium ${isFeatureActive('quizzes') ? 'text-green-600' : 'text-indigo-800'}`}>
-                  Personalized Quizzes
-                </p>
-              </motion.div>
-              
-              <motion.div 
-                className={`absolute -right-8 bottom-20 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg cursor-pointer transform transition-all ${isFeatureActive('flashcards') ? 'ring-2 ring-green-400 scale-110' : 'hover:scale-105'}`}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 1.2 }}
-                onClick={() => handleFeatureClick('flashcards')}
-                whileHover={{ scale: isFeatureActive('flashcards') ? 1.1 : 1.05 }}
-              >
-                <p className={`text-xs font-medium ${isFeatureActive('flashcards') ? 'text-green-600' : 'text-indigo-800'}`}>
-                  Adaptive Flashcards
-                </p>
-              </motion.div>
+              {/* Mobile feature buttons (visible only on mobile) */}
+              {isMobile && (
+                <div className="mt-6 flex justify-center space-x-2">
+                  {['ai-learning', 'quizzes', 'flashcards'].map((feature) => (
+                    <button 
+                      key={feature}
+                      className={`px-2 py-1 rounded-full text-xs ${
+                        isFeatureActive(feature) 
+                          ? 'bg-green-500 text-white' 
+                          : 'bg-white/80 text-indigo-800'
+                      }`}
+                      onClick={() => handleFeatureClick(feature as FeatureType)}
+                    >
+                      {features.find(f => f.id === feature)?.name}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
