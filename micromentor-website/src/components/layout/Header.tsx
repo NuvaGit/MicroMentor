@@ -1,9 +1,10 @@
+// src/components/layout/Header.tsx
 "use client"
 
 import React, { MouseEvent, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 // Define navigation item shape
@@ -18,6 +19,8 @@ const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,14 +48,51 @@ const Header: React.FC = () => {
   const handleNavLinkClick = (
     e: MouseEvent<HTMLAnchorElement>,
     targetId?: string,
-    isExternal = false
+    isExternal = false,
+    href?: string
   ): void => {
-    if (isExternal || !targetId) {
+    if (isExternal) {
       setMobileMenuOpen(false);
       return;
     }
+    
     e.preventDefault();
-    scrollToSection(targetId);
+    
+    // If we're on a different page and trying to navigate to a section on the home page
+    if (!isHomePage && targetId && href?.startsWith('#')) {
+      // Navigate to home page first, then scroll after a small delay
+      router.push('/');
+      
+      // We'll let the page load first before attempting to scroll to the section
+      // This won't execute the setTimeout until after the router completes navigation
+      setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          scrollToSection(targetId);
+        }
+      }, 100);
+    } else if (targetId) {
+      // On home page, just scroll to the section
+      scrollToSection(targetId);
+    } else {
+      // Regular navigation
+      router.push(href || '/');
+    }
+    
+    setMobileMenuOpen(false);
+  };
+
+  const handleLogoClick = (e: MouseEvent<HTMLAnchorElement>): void => {
+    e.preventDefault();
+    
+    if (isHomePage) {
+      // If already on home page, just scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // If on another page, navigate to home
+      router.push('/');
+    }
+    
     setMobileMenuOpen(false);
   };
 
@@ -77,10 +117,7 @@ const Header: React.FC = () => {
           <div className="flex items-center px-4">
             <Link
               href="/"
-              onClick={(e: MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+              onClick={handleLogoClick}
               className="flex items-center space-x-2"
             >
               <Image src="/images/logo.svg" alt="MicroMentor Logo" width={40} height={40} />
@@ -96,7 +133,7 @@ const Header: React.FC = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                onClick={(e: MouseEvent<HTMLAnchorElement>) => handleNavLinkClick(e, item.targetId, item.isExternal)}
+                onClick={(e) => handleNavLinkClick(e, item.targetId, item.isExternal, item.href)}
                 className={`text-sm font-medium px-3 py-2 rounded-md transition-all duration-300 ${
                   scrolled ? 'text-gray-700 hover:text-indigo-600 hover:bg-indigo-50/50' : 'text-white hover:text-white hover:bg-white/20'
                 }`}
@@ -110,7 +147,7 @@ const Header: React.FC = () => {
           <div className="hidden md:flex items-center px-4">
             <Link
               href="#download"
-              onClick={(e: MouseEvent<HTMLAnchorElement>) => handleNavLinkClick(e, 'download')}
+              onClick={(e) => handleNavLinkClick(e, 'download', false, '#download')}
               className={`font-medium text-sm px-4 py-2 rounded-md transition-all duration-300 ${
                 scrolled
                   ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40'
@@ -146,7 +183,7 @@ const Header: React.FC = () => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={(e: MouseEvent<HTMLAnchorElement>) => handleNavLinkClick(e, item.targetId, item.isExternal)}
+                  onClick={(e) => handleNavLinkClick(e, item.targetId, item.isExternal, item.href)}
                   className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-600 dark:hover:text-white"
                 >
                   {item.name}
@@ -155,7 +192,7 @@ const Header: React.FC = () => {
               <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
                 <Link
                   href="#download"
-                  onClick={(e: MouseEvent<HTMLAnchorElement>) => handleNavLinkClick(e, 'download')}
+                  onClick={(e) => handleNavLinkClick(e, 'download', false, '#download')}
                   className="block w-full text-center font-medium px-3 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white"
                 >
                   Download Now
