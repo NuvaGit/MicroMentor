@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
             <div className="prose dark:prose-invert max-w-none">
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">1. Introduction & Scope</h2>
               <p className="mb-6 text-gray-700 dark:text-gray-300">
-                MicroMentor ("we", "our", or "us") is an AI-powered study companion application developed by Jack Neilan, a computer science university student. This Privacy Policy explains how we collect, use, and share information about you when you use our mobile application (the "App") and website (together, the "Services").
+                MicroMentor (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is an AI-powered study companion application developed by Jack Neilan, a computer science university student. This Privacy Policy explains how we collect, use, and share information about you when you use our mobile application (the &quot;App&quot;) and website (together, the &quot;Services&quot;).
               </p>
               
               <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">2. Data We Collect</h2>
@@ -69,7 +69,7 @@ export default function PrivacyPolicy() {
                 <li><strong>Opt-Out:</strong> You can opt out of non-essential communications by updating your preferences in the app settings.</li>
               </ul>
               
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">7. Children's Privacy</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">7. Children&apos;s Privacy</h2>
               <p className="mb-6 text-gray-700 dark:text-gray-300">
                 Our Services are not directed to children under the age of 13, and we do not knowingly collect personal information from children under 13. If we learn that we have collected personal information from a child under 13, we will promptly delete that information. If you believe we have collected personal information from a child under 13, please contact us.
               </p>

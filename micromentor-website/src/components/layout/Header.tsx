@@ -1,5 +1,4 @@
-// src/components/layout/Header.tsx
-"use client"
+'use client'
 
 import React, { MouseEvent, useState, useEffect } from 'react';
 import Link from 'next/link';
